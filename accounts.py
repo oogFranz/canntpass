@@ -9,8 +9,8 @@ def hasSocialService(displayName, socialService):
 
 
 cybozuConnpassUrl = 'https://cybozu.connpass.com/participation/'
-userData = pd.DataFrame({}, columns=['userId', 'userName',
-                                     'hasTwitter', 'hasFacebook', 'hasGitHub'])
+userData = pd.DataFrame(
+    {}, columns=['userId', 'hasTwitter', 'hasFacebook', 'hasGitHub'])
 
 pageNumber = 1
 
@@ -32,13 +32,10 @@ while True:
         if m is None:
             continue
         userId = m.groups()[0]
-        userName = displayName.a.text.encode().decode(
-            'ascii', errors="backslashreplace")
         hasTwitter = hasSocialService(displayName, "Twitter")
         hasFacebook = hasSocialService(displayName, "Facebook")
         hasGitHub = hasSocialService(displayName, "GitHub")
-        userData.loc[userId] = [userId, userName,
-                                hasTwitter, hasFacebook, hasGitHub]
+        userData.loc[userId] = [userId, hasTwitter, hasFacebook, hasGitHub]
     if len(soup.find_all("a", text=re.compile(">>"))) == 0:
         break
     pageNumber += 1
